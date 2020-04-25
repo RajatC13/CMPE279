@@ -24,15 +24,17 @@ int main(int argc, char const *argv[])
     if(argc > 1 && strcmp(argv[1],"exec")==0)
     {
 
-      printf("|---->INSIDE EXEC %d\n", argc);
+      printf("|----->INSIDE EXEC\n");
       int socket = (int) *argv[2];
       valread = read( socket , buffer, 1024);
-      printf("%s\n",buffer );
+      printf("        %s\n",buffer );
       send(socket , hello , strlen(hello) , 0 );
-      printf("Hello message sent\n");
+      printf("        Hello message sent\n");
+      printf("|----->EXITING EXEC\n");
       return 0;
     }
     printf("|-->SERVER RUNNING..\n");
+
 
     // Creating socket file descriptor
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
@@ -73,7 +75,7 @@ int main(int argc, char const *argv[])
 
 
     if ((child_pid =fork()) == 0) {
-        printf("|---->INSIDE CHILD\n\n");
+        printf("|---->INSIDE CHILD\n");
 
         // status = setuid(no_uid);
         // printf("%d \n", status);
@@ -84,18 +86,19 @@ int main(int argc, char const *argv[])
         }
         char *args[] = {"./server", "exec", (char *)&new_socket, NULL};
         execv(args[0], args);
+        printf("|---->EXITING CHILD\n");
     }
     else {
         int return_status;
         waitpid(child_pid, &return_status, 0);
         if(return_status == 0)
         {
-            printf("Child process terminated normally\n");
+            printf("|---->Child process terminated normally\n");
         } else
         {
             printf("Child process terminated with an error\n");
         }
-
+        printf("|-------------------\n");
         return 0;
     }
 

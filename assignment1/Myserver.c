@@ -6,6 +6,7 @@
 #include <netinet/in.h>
 #include <string.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #define PORT 8080
 int main(int argc, char const *argv[])
 {
@@ -57,8 +58,9 @@ int main(int argc, char const *argv[])
         exit(EXIT_FAILURE);
     }
 
+    pid_t child_pid;
 
-    if (fork() == 0) {
+    if ((child_pid =fork()) == 0) {
         printf("Inside Child\n\n");
 
         // status = setuid(no_uid);
@@ -74,6 +76,16 @@ int main(int argc, char const *argv[])
         printf("Hello message sent\n");
     }
     else {
+        int return_status;
+        waitpid(child_pid, &return_status, 0);
+        if(return_status == 0)
+        {
+            printf("Child process terminated normally\n");
+        } else
+        {
+            printf("Child process terminated with an error\n");
+        }
+
         return 0;
     }
 

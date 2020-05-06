@@ -7,10 +7,12 @@ We achieve privilege separation in server by forking and dropping privileges. Th
 
 ### Running The Server
 `$ gcc Myserver.c -o server`
+
 `$ sud0 ./server`
 
 ### Running The Client
 `$ gcc client.c -o client`
+
 `$ ./server`
 
 ## Assignment 2
@@ -19,8 +21,10 @@ This assignment is based on the assignment 2. We achieve address space randomiza
 
 ### Running The Server
 `$ gcc server.c -o server`
+
 `$ sud0 ./server`
 
 ### Running The Client
 `$ gcc client.c -o client`
+
 `$ ./server`
